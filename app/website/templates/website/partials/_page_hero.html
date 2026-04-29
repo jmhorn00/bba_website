@@ -1,0 +1,14 @@
+<!-- Inner page hero banner — include with {% include "website/partials/_page_hero.html" with title="Page Title" breadcrumb="Home / Page" %} -->
+<section class="bg-cream border-b border-border py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {% if breadcrumb %}
+    <div class="text-xs text-muted uppercase tracking-widest mb-3">
+      <a href="/" class="hover:text-gold transition-colors">Home</a>
+      <span class="mx-2">/</span>
+      <span>{{ title }}</span>
+    </div>
+    {% endif %}
+    <div class="w-12 h-0.5 bg-gold mb-4"></div>
+    <h1 class="font-serif text-4xl sm:text-5xl text-navy font-bold">{{ title }}</h1>
+  </div>
+</section>

@@ -1,0 +1,55 @@
+{% extends "website/base.html" %}
+
+{% block title %}Payment Confirmed — BBA CPAs{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+
+  <!-- Checkmark -->
+  <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+    <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+    </svg>
+  </div>
+
+  <div class="w-12 h-0.5 bg-gold mx-auto mb-6"></div>
+  <h1 class="font-serif text-4xl text-navy font-bold mb-3">Payment Received!</h1>
+  <p class="text-muted text-lg mb-8">Your payment has been processed successfully.</p>
+
+  {% if record %}
+  <!-- Payment Summary -->
+  <div class="bg-cream border border-border rounded-xl p-6 text-left mb-8">
+    <h2 class="font-semibold text-navy mb-4">Payment Summary</h2>
+    <dl class="space-y-3 text-sm">
+      <div class="flex justify-between">
+        <dt class="text-muted">Client Name</dt>
+        <dd class="font-medium text-navy">{{ record.client_name }}</dd>
+      </div>
+      <div class="flex justify-between">
+        <dt class="text-muted">Amount Paid</dt>
+        <dd class="font-bold text-navy text-base">${{ record.amount }}</dd>
+      </div>
+      {% if record.invoice_number %}
+      <div class="flex justify-between">
+        <dt class="text-muted">Invoice Number</dt>
+        <dd class="font-medium text-navy">{{ record.invoice_number }}</dd>
+      </div>
+      {% endif %}
+    </dl>
+  </div>
+  <p class="text-muted text-sm mb-10">
+    A confirmation has been sent to <strong>{{ record.client_email }}</strong>.
+    Please retain this email for your records.
+  </p>
+  {% endif %}
+
+  <div class="flex flex-wrap gap-4 justify-center">
+    <a href="/" class="bg-navy text-white px-6 py-3 rounded font-medium hover:bg-navy/90 transition-colors">
+      Return to Home
+    </a>
+    <a href="/contact/" class="border border-navy text-navy px-6 py-3 rounded font-medium hover:bg-navy hover:text-white transition-colors">
+      Contact Us
+    </a>
+  </div>
+</div>
+{% endblock %}

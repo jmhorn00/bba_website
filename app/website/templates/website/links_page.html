@@ -1,0 +1,47 @@
+{% extends "website/base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+{% include "website/partials/_page_hero.html" with title=page.title breadcrumb=True %}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+  <!-- Intro -->
+  <div class="max-w-3xl mb-14">
+    <div class="prose prose-lg text-muted">{{ page.intro|richtext }}</div>
+  </div>
+
+  <!-- Link Groups -->
+  <div class="space-y-14">
+    {% for block in page.link_groups %}
+    <div>
+      <div class="flex items-center gap-4 mb-6">
+        <div class="w-12 h-0.5 bg-gold"></div>
+        <h2 class="font-serif text-2xl text-navy font-bold">{{ block.value.group_title }}</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-3">
+        {% for link in block.value.links %}
+        <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer"
+           class="flex items-center justify-between gap-4 bg-white border border-border rounded-lg px-5 py-4
+                  hover:border-gold hover:shadow-sm transition-all group">
+          <div class="flex-1 min-w-0">
+            <div class="font-medium text-navy text-sm group-hover:text-gold transition-colors">{{ link.label }}</div>
+            {% if link.description %}
+            <div class="text-muted text-xs mt-0.5 truncate">{{ link.description }}</div>
+            {% endif %}
+          </div>
+          <svg class="w-4 h-4 text-muted group-hover:text-gold flex-shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+          </svg>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% empty %}
+    <div class="text-center py-16 text-muted">
+      <p>Links will appear here once added in the CMS.</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

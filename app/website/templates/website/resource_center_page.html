@@ -1,0 +1,98 @@
+{% extends "website/base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+{% include "website/partials/_page_hero.html" with title=page.title breadcrumb=True %}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+  <!-- Intro -->
+  <div class="max-w-3xl mb-14">
+    <div class="prose prose-lg text-muted">{{ page.intro|richtext }}</div>
+  </div>
+
+  <!-- Primary Resource Cards -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
+
+    <!-- Tax Organizer -->
+    <div class="bg-white border border-border rounded-xl p-8 flex flex-col">
+      <div class="text-4xl mb-5">📋</div>
+      <h2 class="font-serif text-xl text-navy font-semibold mb-3">Client Tax Organizer</h2>
+      <p class="text-muted text-sm leading-relaxed mb-6 flex-1">
+        Whether you're a new or returning client, our tax organizer helps you compile everything you need for an efficient and accurate tax return. Download the form and bring it to your appointment or send it securely via ShareFile.
+      </p>
+      {% if page.tax_organizer_url %}
+      <a href="{{ page.tax_organizer_url }}" target="_blank" rel="noopener"
+         class="inline-flex items-center justify-center gap-2 bg-navy text-white px-5 py-2.5 rounded font-medium text-sm hover:bg-navy/90 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+        </svg>
+        Download Organizer
+      </a>
+      {% else %}
+      <a href="/contact/" class="inline-flex items-center justify-center gap-2 bg-navy text-white px-5 py-2.5 rounded font-medium text-sm hover:bg-navy/90 transition-colors">
+        Request Organizer
+      </a>
+      {% endif %}
+    </div>
+
+    <!-- IRS Forms -->
+    <div class="bg-white border border-border rounded-xl p-8 flex flex-col">
+      <div class="text-4xl mb-5">📄</div>
+      <h2 class="font-serif text-xl text-navy font-semibold mb-3">Federal Tax Forms &amp; IRS Publications</h2>
+      <p class="text-muted text-sm leading-relaxed mb-6 flex-1">
+        Access the complete library of IRS tax forms, instructions, and publications. Search by form number or topic to find exactly what you need for filing, planning, or research.
+      </p>
+      <a href="{{ page.irs_forms_url }}" target="_blank" rel="noopener"
+         class="inline-flex items-center justify-center gap-2 bg-navy text-white px-5 py-2.5 rounded font-medium text-sm hover:bg-navy/90 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+        </svg>
+        Visit IRS Forms Library
+      </a>
+    </div>
+
+    <!-- ShareFile -->
+    <div class="bg-white border border-border rounded-xl p-8 flex flex-col">
+      <div class="text-4xl mb-5">🔒</div>
+      <h2 class="font-serif text-xl text-navy font-semibold mb-3">ShareFile Client Portal</h2>
+      <p class="text-muted text-sm leading-relaxed mb-6 flex-1">
+        Sign into your secure ShareFile account to send or receive files with our team. Safely share tax documents, financial statements, and sensitive records without using email attachments.
+      </p>
+      <div class="flex flex-col gap-2">
+        <a href="{{ page.sharefile_url }}" target="_blank" rel="noopener"
+           class="inline-flex items-center justify-center gap-2 bg-navy text-white px-5 py-2.5 rounded font-medium text-sm hover:bg-navy/90 transition-colors">
+          Sign In to ShareFile
+        </a>
+        <a href="{{ page.sharefile_signup_url }}" target="_blank" rel="noopener"
+           class="inline-flex items-center justify-center gap-2 border border-navy text-navy px-5 py-2.5 rounded font-medium text-sm hover:bg-navy hover:text-white transition-colors">
+          Create Free Account
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Additional Resources (StreamField) -->
+  {% if page.resources %}
+  <div class="border-t border-border pt-12">
+    <h2 class="font-serif text-2xl text-navy font-bold mb-8">Additional Resources</h2>
+    <div class="grid sm:grid-cols-2 gap-4">
+      {% for block in page.resources %}
+      <div class="bg-cream border border-border rounded-lg p-5 flex gap-4 items-start">
+        <div class="text-2xl flex-shrink-0">{{ block.value.icon }}</div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-navy mb-1">{{ block.value.title }}</h3>
+          <p class="text-muted text-sm mb-3 leading-relaxed">{{ block.value.description }}</p>
+          <a href="{{ block.value.link_url }}"
+             {% if block.value.external %}target="_blank" rel="noopener"{% endif %}
+             class="text-gold text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">
+            {{ block.value.link_text }} &rarr;
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

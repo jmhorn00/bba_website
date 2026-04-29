@@ -1,0 +1,98 @@
+{% extends "website/base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+{% include "website/partials/_page_hero.html" with title=page.title breadcrumb=True %}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+  <!-- Intro -->
+  <div class="max-w-3xl mb-12">
+    <div class="prose prose-lg text-muted">{{ page.intro|richtext }}</div>
+  </div>
+
+  <!-- Category Filter Tabs -->
+  <div class="flex flex-wrap gap-2 mb-10" id="category-filters">
+    <button onclick="filterCalcs('all')" data-cat="all"
+            class="filter-btn active px-4 py-2 rounded-full text-sm font-medium border transition-colors
+                   bg-navy text-white border-navy">
+      All
+    </button>
+    <button onclick="filterCalcs('savings')" data-cat="savings"
+            class="filter-btn px-4 py-2 rounded-full text-sm font-medium border border-border text-muted hover:border-navy hover:text-navy transition-colors">
+      Savings &amp; Goals
+    </button>
+    <button onclick="filterCalcs('tax')" data-cat="tax"
+            class="filter-btn px-4 py-2 rounded-full text-sm font-medium border border-border text-muted hover:border-navy hover:text-navy transition-colors">
+      Tax
+    </button>
+    <button onclick="filterCalcs('retirement')" data-cat="retirement"
+            class="filter-btn px-4 py-2 rounded-full text-sm font-medium border border-border text-muted hover:border-navy hover:text-navy transition-colors">
+      Retirement
+    </button>
+    <button onclick="filterCalcs('payroll')" data-cat="payroll"
+            class="filter-btn px-4 py-2 rounded-full text-sm font-medium border border-border text-muted hover:border-navy hover:text-navy transition-colors">
+      Payroll &amp; Income
+    </button>
+    <button onclick="filterCalcs('investment')" data-cat="investment"
+            class="filter-btn px-4 py-2 rounded-full text-sm font-medium border border-border text-muted hover:border-navy hover:text-navy transition-colors">
+      Investment
+    </button>
+  </div>
+
+  <!-- Calculator Grid -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12" id="calc-grid">
+    {% for calc in calculators %}
+    <div class="calc-card bg-white border border-border rounded-xl p-6 hover:-translate-y-1 transition-transform duration-200 group"
+         data-category="{{ calc.category }}">
+      <div class="flex items-start justify-between mb-4">
+        <div>
+          <span class="text-xs uppercase tracking-wider text-gold font-medium">{{ calc.category|title }}</span>
+          <h3 class="font-serif text-navy font-semibold text-lg mt-1">{{ calc.title }}</h3>
+        </div>
+        <div class="text-3xl">
+          {% if calc.category == 'savings' %}💰
+          {% elif calc.category == 'tax' %}📊
+          {% elif calc.category == 'retirement' %}🏖️
+          {% elif calc.category == 'payroll' %}💼
+          {% else %}📈{% endif %}
+        </div>
+      </div>
+      <p class="text-muted text-sm leading-relaxed mb-5">{{ calc.description }}</p>
+      <button
+        hx-get="{% url 'calculators:calculator_detail' calc.slug %}"
+        hx-target="#calculator-container"
+        hx-swap="innerHTML"
+        hx-on::after-request="document.getElementById('calculator-container').scrollIntoView({behavior:'smooth', block:'start'})"
+        class="text-gold text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all cursor-pointer">
+        Open Calculator &rarr;
+      </button>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Calculator Container (HTMX target) -->
+  <div id="calculator-container" class="min-h-[100px]"></div>
+</div>
+
+<script>
+function filterCalcs(cat) {
+  document.querySelectorAll('.calc-card').forEach(el => {
+    if (cat === 'all' || el.dataset.category === cat) {
+      el.classList.remove('hidden');
+    } else {
+      el.classList.add('hidden');
+    }
+  });
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    if (btn.dataset.cat === cat) {
+      btn.classList.add('bg-navy', 'text-white', 'border-navy');
+      btn.classList.remove('text-muted', 'border-border');
+    } else {
+      btn.classList.remove('bg-navy', 'text-white', 'border-navy');
+      btn.classList.add('text-muted', 'border-border');
+    }
+  });
+}
+</script>
+{% endblock %}

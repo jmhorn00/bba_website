@@ -1,0 +1,126 @@
+{% extends "website/base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+{% include "website/partials/_page_hero.html" with title=page.title breadcrumb=True %}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+  <!-- Culture Statement -->
+  <div class="grid lg:grid-cols-2 gap-12 mb-16 items-center">
+    <div>
+      <p class="text-gold uppercase tracking-widest text-xs font-medium mb-3">Our Culture</p>
+      <div class="w-12 h-0.5 bg-gold mb-6"></div>
+      <div class="font-serif text-3xl text-navy font-bold mb-6 leading-snug">
+        {{ page.culture_statement|richtext }}
+      </div>
+      <div class="prose text-muted">{{ page.intro|richtext }}</div>
+    </div>
+    <div class="bg-navy rounded-xl p-8">
+      <p class="text-white/80 leading-relaxed italic font-serif text-lg">
+        "We are a client focused firm committed to providing each and every client the best service possible. For self-starters who want to grow a great career and enjoy the journey, BB&amp;A is the best of all worlds."
+      </p>
+    </div>
+  </div>
+
+  <!-- Benefits -->
+  {% if page.benefits %}
+  <div class="mb-16">
+    <h2 class="font-serif text-3xl text-navy font-bold mb-8">Why Work at BB&amp;A</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {% for block in page.benefits %}
+      <div class="bg-cream border border-border rounded-xl p-6">
+        <div class="text-3xl mb-3">{{ block.value.icon }}</div>
+        <h3 class="font-serif text-navy font-semibold text-lg mb-2">{{ block.value.title }}</h3>
+        <p class="text-muted text-sm leading-relaxed">{{ block.value.body }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Open Positions -->
+  <div class="border-t border-border pt-16 mb-16">
+    <h2 class="font-serif text-3xl text-navy font-bold mb-8">Open Positions</h2>
+
+    {% if page.open_positions %}
+    <div class="space-y-4" id="positions-list">
+      {% for block in page.open_positions %}
+      <div class="border border-border rounded-xl overflow-hidden bg-white">
+        <button
+          onclick="togglePosition(this)"
+          class="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-cream transition-colors">
+          <div class="flex items-center gap-4">
+            <div>
+              <div class="font-semibold text-navy text-lg">{{ block.value.title }}</div>
+              <div class="text-sm text-muted mt-0.5">
+                {% if block.value.type == 'full_time' %}Full Time
+                {% elif block.value.type == 'part_time' %}Part Time
+                {% else %}Seasonal{% endif %}
+              </div>
+            </div>
+          </div>
+          <svg class="w-5 h-5 text-muted transition-transform accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        <div class="accordion-body hidden border-t border-border px-6 py-6">
+          <div class="grid lg:grid-cols-2 gap-8">
+            <div>
+              <h4 class="font-semibold text-navy mb-3">About the Role</h4>
+              <div class="prose prose-sm text-muted">{{ block.value.description|richtext }}</div>
+            </div>
+            <div>
+              <h4 class="font-semibold text-navy mb-3">Requirements</h4>
+              <div class="prose prose-sm text-muted">{{ block.value.requirements|richtext }}</div>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-border">
+            <a href="mailto:{{ page.apply_email }}?subject=Application: {{ block.value.title }}"
+               class="inline-flex items-center gap-2 bg-navy text-white px-6 py-2.5 rounded font-medium text-sm hover:bg-navy/90 transition-colors">
+              Apply for This Position
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <!-- No open positions fallback -->
+    <div class="bg-cream border border-border rounded-xl p-10 text-center">
+      <div class="text-5xl mb-4">📨</div>
+      <h3 class="font-serif text-2xl text-navy font-semibold mb-3">No Current Openings</h3>
+      <p class="text-muted max-w-lg mx-auto mb-6">
+        We don't have any open positions at the moment, but we're always interested in meeting talented people.
+        Send your resume and we'll keep it on file for future opportunities.
+      </p>
+      <a href="mailto:{{ page.apply_email }}"
+         class="inline-flex items-center gap-2 bg-navy text-white px-6 py-3 rounded font-medium hover:bg-navy/90 transition-colors">
+        Send Us Your Resume
+      </a>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Apply CTA -->
+  <div class="text-center">
+    <a href="mailto:{{ page.apply_email }}"
+       class="inline-flex items-center gap-2 border border-gold text-gold px-8 py-3 rounded font-medium hover:bg-gold hover:text-navy transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+      {{ page.apply_email }}
+    </a>
+  </div>
+</div>
+
+<script>
+function togglePosition(btn) {
+  const body = btn.nextElementSibling;
+  const icon = btn.querySelector('.accordion-icon');
+  body.classList.toggle('hidden');
+  icon.classList.toggle('rotate-180');
+}
+</script>
+{% endblock %}

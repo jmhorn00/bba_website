@@ -1,0 +1,215 @@
+{% extends "website/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block title %}BBA CPAs &mdash; Brunner, Blackstone &amp; Associates, PC{% endblock %}
+
+{% block content %}
+
+<!-- ═══════════════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════════════ -->
+<section class="bg-cream">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-0 min-h-[560px]">
+
+      <!-- Left: headline + stats + CTAs -->
+      <div class="flex flex-col justify-center py-16 pr-0 lg:pr-12">
+        <div class="w-12 h-0.5 bg-gold mb-6"></div>
+        <p class="text-gold uppercase tracking-widest text-xs font-medium mb-3">Certified Public Accountants</p>
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-navy font-bold leading-tight mb-6">
+          {{ page.hero_headline }}
+        </h1>
+        <div class="text-muted text-lg leading-relaxed mb-8">
+          {{ page.hero_subheadline|richtext }}
+        </div>
+
+        <!-- Stats -->
+        <div class="flex gap-8 mb-10">
+          <div>
+            <div class="font-serif text-3xl font-bold text-navy">{{ page.hero_stat_1_number }}</div>
+            <div class="text-xs text-muted uppercase tracking-wide">{{ page.hero_stat_1_label }}</div>
+          </div>
+          <div class="w-px bg-border"></div>
+          <div>
+            <div class="font-serif text-3xl font-bold text-navy">{{ page.hero_stat_2_number }}</div>
+            <div class="text-xs text-muted uppercase tracking-wide">{{ page.hero_stat_2_label }}</div>
+          </div>
+          <div class="w-px bg-border"></div>
+          <div>
+            <div class="font-serif text-3xl font-bold text-navy">{{ page.hero_stat_3_number }}</div>
+            <div class="text-xs text-muted uppercase tracking-wide">{{ page.hero_stat_3_label }}</div>
+          </div>
+        </div>
+
+        <!-- CTAs -->
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact/" class="bg-navy text-white px-6 py-3 rounded font-medium hover:bg-navy/90 transition-colors">
+            {{ page.hero_cta_text }}
+          </a>
+          <a href="/services/" class="border border-navy text-navy px-6 py-3 rounded font-medium hover:bg-navy hover:text-white transition-colors">
+            Our Services
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: dark navy panel -->
+      <div class="hidden lg:flex bg-navy flex-col justify-center px-12 py-16">
+        <p class="text-gold uppercase tracking-widest text-xs font-medium mb-6">What We Do</p>
+        <div class="space-y-5">
+          {% for block in page.services %}
+          {% if forloop.counter <= 4 %}
+          <div class="flex gap-4 items-start">
+            <div class="w-10 h-10 bg-white/10 rounded flex items-center justify-center text-xl flex-shrink-0">
+              {{ block.value.icon }}
+            </div>
+            <div>
+              <div class="text-white font-semibold text-sm">{{ block.value.title }}</div>
+              <div class="text-white/60 text-xs mt-0.5 leading-relaxed">{{ block.value.body|truncatechars:80 }}</div>
+            </div>
+          </div>
+          {% endif %}
+          {% empty %}
+          <div class="flex gap-4 items-start">
+            <div class="w-10 h-10 bg-white/10 rounded flex items-center justify-center text-xl flex-shrink-0">📊</div>
+            <div>
+              <div class="text-white font-semibold text-sm">Tax Services</div>
+              <div class="text-white/60 text-xs mt-0.5">Individual & business tax preparation and planning.</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="mt-8 pt-6 border-t border-white/10 flex items-center gap-3">
+          <div class="w-2 h-2 rounded-full bg-gold"></div>
+          <p class="text-white/70 text-sm">Partners involved in every engagement.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SERVICES GRID
+═══════════════════════════════════════════════════════════════ -->
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <p class="text-gold uppercase tracking-widest text-xs font-medium mb-3">What We Offer</p>
+      <div class="w-12 h-0.5 bg-gold mx-auto mb-4"></div>
+      <h2 class="font-serif text-4xl text-navy font-bold mb-4">Our Services</h2>
+      <div class="text-muted max-w-2xl mx-auto">{{ page.services_intro|richtext }}</div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for block in page.services %}
+      <div class="bg-cream border border-border rounded-lg p-6 hover:-translate-y-1 transition-transform duration-200 group">
+        <div class="text-3xl mb-4">{{ block.value.icon }}</div>
+        <h3 class="font-serif text-lg text-navy font-semibold mb-2">{{ block.value.title }}</h3>
+        <p class="text-muted text-sm leading-relaxed mb-4">{{ block.value.body }}</p>
+        <a href="/services/" class="text-gold text-sm font-medium group-hover:gap-2 flex items-center gap-1 transition-all">
+          {{ block.value.link_text }} <span>&rarr;</span>
+        </a>
+      </div>
+      {% empty %}
+      <div class="col-span-3 text-center text-muted py-8">Services will appear here once added in the CMS.</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     WHY BBA (Navy Section)
+═══════════════════════════════════════════════════════════════ -->
+<section class="py-20 bg-navy">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 items-start">
+
+      <!-- Left: text -->
+      <div>
+        <p class="text-gold uppercase tracking-widest text-xs font-medium mb-3">Our Difference</p>
+        <div class="w-12 h-0.5 bg-gold mb-6"></div>
+        <h2 class="font-serif text-4xl text-white font-bold mb-6">{{ page.why_headline }}</h2>
+        <div class="text-white/70 leading-relaxed mb-8">{{ page.why_body|richtext }}</div>
+        <a href="/about/" class="inline-flex items-center gap-2 border border-gold text-gold px-6 py-3 rounded font-medium hover:bg-gold hover:text-navy transition-colors">
+          Learn About Our Firm &rarr;
+        </a>
+      </div>
+
+      <!-- Right: feature cards -->
+      <div class="space-y-4">
+        {% for block in page.why_items %}
+        <div class="bg-white/5 border border-white/10 rounded-lg p-5 flex gap-4">
+          <div class="text-2xl flex-shrink-0">{{ block.value.icon }}</div>
+          <div>
+            <h3 class="text-white font-semibold mb-1">{{ block.value.title }}</h3>
+            <p class="text-white/60 text-sm leading-relaxed">{{ block.value.body }}</p>
+          </div>
+        </div>
+        {% empty %}
+        <div class="bg-white/5 border border-white/10 rounded-lg p-5 text-white/60 text-sm">
+          Why BBA items will appear here once added in the CMS.
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TEAM PREVIEW
+═══════════════════════════════════════════════════════════════ -->
+{% if page.team_members %}
+<section class="py-20 bg-cream">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <p class="text-gold uppercase tracking-widest text-xs font-medium mb-3">Our People</p>
+      <div class="w-12 h-0.5 bg-gold mx-auto mb-4"></div>
+      <h2 class="font-serif text-4xl text-navy font-bold">Meet the Team</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for block in page.team_members %}
+      <div class="bg-white border border-border rounded-lg p-6 text-center">
+        {% if block.value.photo %}
+          {% image block.value.photo width-120 as photo %}
+          <img src="{{ photo.url }}" alt="{{ block.value.name }}" class="w-20 h-20 rounded-full mx-auto mb-4 object-cover">
+        {% else %}
+          <div class="w-20 h-20 rounded-full bg-navy mx-auto mb-4 flex items-center justify-center">
+            <span class="text-gold font-serif font-bold text-xl">{{ block.value.initials }}</span>
+          </div>
+        {% endif %}
+        <h3 class="font-serif text-lg text-navy font-semibold">{{ block.value.name }}</h3>
+        <p class="text-gold text-sm mb-2">{{ block.value.title }}</p>
+        <p class="text-muted text-sm leading-relaxed">{{ block.value.bio|truncatechars:120 }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CTA BANNER
+═══════════════════════════════════════════════════════════════ -->
+<section class="py-20 bg-white">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <p class="text-gold uppercase tracking-widest text-xs font-medium mb-3">Take the Next Step</p>
+    <div class="w-12 h-0.5 bg-gold mx-auto mb-6"></div>
+    <h2 class="font-serif text-4xl text-navy font-bold mb-4">{{ page.cta_headline }}</h2>
+    <div class="text-muted text-lg leading-relaxed mb-10">{{ page.cta_body|richtext }}</div>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <a href="/contact/" class="bg-navy text-white px-8 py-3 rounded font-medium hover:bg-navy/90 transition-colors">
+        Schedule a Consultation
+      </a>
+      <a href="tel:{{ page.cta_phone }}" class="border border-navy text-navy px-8 py-3 rounded font-medium hover:bg-navy hover:text-white transition-colors flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+        </svg>
+        {{ page.cta_phone }}
+      </a>
+      <a href="/pay/" class="border border-gold text-gold px-8 py-3 rounded font-medium hover:bg-gold hover:text-navy transition-colors">
+        Pay an Invoice &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% if results.error %}
+<div class="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 text-sm">
+  {{ results.error }}
+</div>
+
+{% else %}
+<div class="bg-cream border border-border rounded-xl p-5">
+  <div class="flex items-center gap-2 mb-4">
+    <div class="w-2 h-2 rounded-full bg-gold"></div>
+    <h4 class="font-semibold text-navy text-sm uppercase tracking-wider">Results</h4>
+  </div>
+
+  <dl class="space-y-3">
+    {% for key, value in results.items %}
+    {% if key != 'error' and key != 'note' and key != 'on_track' and key != 'cash_flow_positive' and key != 'breakeven' and key != 'penalty_applies' %}
+    <div class="flex justify-between items-center py-1.5 border-b border-border/50 last:border-0">
+      <dt class="text-muted text-sm capitalize">{{ key|cut:"_"|title }}</dt>
+      <dd class="font-semibold text-navy text-sm">{{ value }}</dd>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </dl>
+
+  {% if results.note %}
+  <p class="text-xs text-muted mt-4 pt-3 border-t border-border leading-relaxed">
+    ℹ️ {{ results.note }}
+  </p>
+  {% endif %}
+
+  {% if results.on_track is not None %}
+  <div class="mt-4 pt-3 border-t border-border">
+    {% if results.on_track %}
+    <div class="flex items-center gap-2 text-green-700 text-sm font-medium">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+      </svg>
+      You are on track to meet your goal!
+    </div>
+    {% else %}
+    <div class="flex items-center gap-2 text-yellow-700 text-sm font-medium">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+      </svg>
+      You may need to increase contributions to reach your goal.
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div class="mt-5 pt-4 border-t border-border">
+    <a href="/contact/" class="inline-flex items-center gap-1 text-gold text-xs font-medium hover:underline">
+      Talk to a CPA about your results &rarr;
+    </a>
+  </div>
+</div>
+{% endif %}

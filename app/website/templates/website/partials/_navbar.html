@@ -1,0 +1,86 @@
+{% load wagtailcore_tags %}
+<header class="sticky top-0 z-50 bg-white shadow-sm" style="height:68px;">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-3 flex-shrink-0">
+      <div class="w-10 h-10 bg-navy rounded flex items-center justify-center flex-shrink-0">
+        <span class="text-gold font-serif font-bold text-xl leading-none">B</span>
+      </div>
+      <div class="hidden sm:block leading-tight">
+        <div class="text-navy font-serif font-semibold text-base leading-tight">Brunner, Blackstone</div>
+        <div class="text-muted text-xs tracking-wide">&amp; Associates, PC &middot; CPAs</div>
+      </div>
+    </a>
+
+    <!-- Desktop Nav -->
+    <ul class="hidden lg:flex items-center gap-6 text-sm font-medium text-dark">
+      <li><a href="/about/" class="hover:text-gold transition-colors">About</a></li>
+      <li><a href="/services/" class="hover:text-gold transition-colors">Services</a></li>
+
+      <!-- Resources Dropdown -->
+      <li class="relative group">
+        <button class="flex items-center gap-1 hover:text-gold transition-colors focus:outline-none">
+          Resources
+          <svg class="w-4 h-4 mt-0.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        <div class="absolute top-full left-0 mt-2 w-52 bg-white rounded shadow-lg border border-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+          <a href="/resource-center/" class="block px-4 py-3 text-sm hover:bg-cream hover:text-gold transition-colors border-b border-border">Resource Center</a>
+          <a href="/financial-tools/" class="block px-4 py-3 text-sm hover:bg-cream hover:text-gold transition-colors border-b border-border">Financial Tools</a>
+          <a href="/newsletters/" class="block px-4 py-3 text-sm hover:bg-cream hover:text-gold transition-colors border-b border-border">Newsletters</a>
+          <a href="/links/" class="block px-4 py-3 text-sm hover:bg-cream hover:text-gold transition-colors">Helpful Links</a>
+        </div>
+      </li>
+
+      <li><a href="/careers/" class="hover:text-gold transition-colors">Careers</a></li>
+      <li>
+        <a href="https://bbacpas.sharefile.com" target="_blank" rel="noopener" class="hover:text-gold transition-colors">
+          Client Portal
+        </a>
+      </li>
+      <li>
+        <a href="/pay/" class="border border-gold text-gold px-3 py-1.5 rounded text-sm font-medium hover:bg-gold hover:text-white transition-colors">
+          Pay Invoice
+        </a>
+      </li>
+    </ul>
+
+    <!-- CTA Button -->
+    <a href="/contact/" class="hidden lg:inline-flex items-center gap-1 bg-navy text-white px-4 py-2 rounded text-sm font-medium hover:bg-navy/90 transition-colors">
+      Get In Touch
+    </a>
+
+    <!-- Mobile Hamburger -->
+    <button
+      class="lg:hidden p-2 rounded text-dark hover:text-gold transition-colors"
+      hx-get="/contact/"
+      aria-label="Open menu"
+      onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-border shadow-lg absolute w-full left-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
+      <a href="/about/" class="block px-3 py-2 rounded hover:bg-cream text-dark hover:text-gold transition-colors">About</a>
+      <a href="/services/" class="block px-3 py-2 rounded hover:bg-cream text-dark hover:text-gold transition-colors">Services</a>
+      <div class="px-3 py-2 font-medium text-muted text-xs uppercase tracking-wider">Resources</div>
+      <a href="/resource-center/" class="block px-6 py-2 rounded hover:bg-cream text-dark hover:text-gold transition-colors text-sm">Resource Center</a>
+      <a href="/financial-tools/" class="block px-6 py-2 rounded hover:bg-cream text-dark hover:text-gold transition-colors text-sm">Financial Tools</a>
+      <a href="/newsletters/" class="block px-6 py-2 rounded hover:bg-cream text-dark hover:text-gold transition-colors text-sm">Newsletters</a>
+      <a href="/links/" class="block px-6 py-2 rounded hover:bg-cream text-dark hover:text-gold transition-colors text-sm">Helpful Links</a>
+      <a href="/careers/" class="block px-3 py-2 rounded hover:bg-cream text-dark hover:text-gold transition-colors">Careers</a>
+      <a href="https://bbacpas.sharefile.com" target="_blank" rel="noopener" class="block px-3 py-2 rounded hover:bg-cream text-dark hover:text-gold transition-colors">Client Portal</a>
+      <a href="/pay/" class="block px-3 py-2 rounded text-gold font-medium">Pay Invoice</a>
+      <div class="pt-2 border-t border-border mt-2">
+        <a href="/contact/" class="block w-full text-center bg-navy text-white px-4 py-2 rounded font-medium hover:bg-navy/90 transition-colors">Get In Touch</a>
+      </div>
+    </div>
+  </div>
+</header>

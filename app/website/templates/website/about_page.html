@@ -1,0 +1,90 @@
+{% extends "website/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+{% include "website/partials/_page_hero.html" with title=page.title breadcrumb=True %}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+  <!-- Intro -->
+  <div class="max-w-3xl mb-16">
+    <div class="prose prose-lg text-muted leading-relaxed">
+      {{ page.intro|richtext }}
+    </div>
+  </div>
+
+  <!-- Mission Statement -->
+  <div class="bg-navy rounded-xl p-8 sm:p-12 mb-16">
+    <p class="text-gold uppercase tracking-widest text-xs font-medium mb-4">Our Mission</p>
+    <div class="w-12 h-0.5 bg-gold mb-6"></div>
+    <div class="text-white/90 text-xl leading-relaxed font-serif italic">
+      {{ page.mission_statement|richtext }}
+    </div>
+  </div>
+
+  <!-- Key Differentiators -->
+  <div class="grid sm:grid-cols-3 gap-8 mb-16">
+    <div class="bg-cream border border-border rounded-lg p-6">
+      <div class="text-3xl mb-3">🤝</div>
+      <h3 class="font-serif text-navy font-semibold text-lg mb-2">Partner-Led Service</h3>
+      <p class="text-muted text-sm leading-relaxed">Partners are personally involved in every client engagement. There is not a project that goes out the door that has not been carefully analyzed and reviewed at the partner level.</p>
+    </div>
+    <div class="bg-cream border border-border rounded-lg p-6">
+      <div class="text-3xl mb-3">📚</div>
+      <h3 class="font-serif text-navy font-semibold text-lg mb-2">Always Current</h3>
+      <p class="text-muted text-sm leading-relaxed">We stay abreast of the most recent regulatory changes so you can think less about accounting and focus more on your business, job, or retirement.</p>
+    </div>
+    <div class="bg-cream border border-border rounded-lg p-6">
+      <div class="text-3xl mb-3">🎯</div>
+      <h3 class="font-serif text-navy font-semibold text-lg mb-2">Personal Attention</h3>
+      <p class="text-muted text-sm leading-relaxed">We provide each and every client the best service possible, combining the resources of a large firm with the personal attention of a boutique practice.</p>
+    </div>
+  </div>
+
+  <!-- Highlight Quote -->
+  <div class="border-l-4 border-gold bg-cream rounded-r-xl p-8 mb-16 max-w-3xl">
+    <p class="font-serif text-xl text-navy italic leading-relaxed">
+      "There is not a project that goes out the door that has not been carefully analyzed and reviewed."
+    </p>
+    <p class="text-muted text-sm mt-4 font-medium">— Brunner, Blackstone &amp; Associates, PC</p>
+  </div>
+
+  <!-- Body StreamField -->
+  {% for block in page.body %}
+  <div class="mb-8">
+    {% if block.block_type == 'paragraph' %}
+      <div class="prose prose-lg text-muted max-w-3xl">{{ block.value|richtext }}</div>
+    {% elif block.block_type == 'highlight' %}
+      <div class="rounded-xl p-8
+        {% if block.value.style == 'navy' %}bg-navy text-white
+        {% elif block.value.style == 'gold' %}border-l-4 border-gold bg-cream
+        {% else %}bg-cream border border-border{% endif %}">
+        <div class="prose {% if block.value.style == 'navy' %}prose-invert{% endif %}">
+          {{ block.value.text|richtext }}
+        </div>
+      </div>
+    {% elif block.block_type == 'team_member' %}
+      <div class="bg-white border border-border rounded-lg p-6 flex gap-6 items-start max-w-2xl">
+        <div class="w-16 h-16 rounded-full bg-navy flex items-center justify-center flex-shrink-0">
+          <span class="text-gold font-serif font-bold text-lg">{{ block.value.initials }}</span>
+        </div>
+        <div>
+          <h3 class="font-serif text-navy font-semibold text-lg">{{ block.value.name }}</h3>
+          <p class="text-gold text-sm mb-2">{{ block.value.title }}</p>
+          <p class="text-muted text-sm leading-relaxed">{{ block.value.bio }}</p>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  <!-- CTA -->
+  <div class="mt-16 text-center border-t border-border pt-16">
+    <h2 class="font-serif text-3xl text-navy font-bold mb-4">Work With Us</h2>
+    <p class="text-muted mb-8 max-w-xl mx-auto">Ready to experience the BB&amp;A difference? Contact us today to schedule a consultation with one of our partners.</p>
+    <a href="/contact/" class="bg-navy text-white px-8 py-3 rounded font-medium hover:bg-navy/90 transition-colors">
+      Contact Us Today
+    </a>
+  </div>
+</div>
+{% endblock %}

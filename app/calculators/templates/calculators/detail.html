@@ -1,0 +1,83 @@
+{% load static %}
+<!-- Calculator widget — loaded via HTMX into #calculator-container -->
+<div class="bg-white border border-border rounded-xl overflow-hidden mt-6">
+  <div class="bg-navy px-6 py-4 flex items-center justify-between">
+    <div>
+      <p class="text-gold text-xs uppercase tracking-wider mb-0.5">{{ calc.category|title }}</p>
+      <h3 class="font-serif text-white font-semibold text-xl">{{ calc.title }}</h3>
+    </div>
+    <button onclick="document.getElementById('calculator-container').innerHTML=''"
+            class="text-white/50 hover:text-white transition-colors">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="p-6">
+    <div class="grid lg:grid-cols-2 gap-8">
+      <!-- Form -->
+      <div>
+        <form hx-post="{% url 'calculators:calculator_submit' calc.slug %}"
+              hx-target="#calc-result-{{ calc.slug }}"
+              hx-swap="innerHTML"
+              class="space-y-4">
+          {% csrf_token %}
+
+          {% include "calculators/partials/_fields.html" with calc=calc %}
+
+          <div class="flex gap-3 pt-2">
+            <button type="submit"
+                    class="flex-1 bg-navy text-white py-2.5 px-5 rounded font-medium hover:bg-navy/90 transition-colors text-sm">
+              Calculate
+            </button>
+            <button type="reset"
+                    onclick="document.getElementById('calc-result-{{ calc.slug }}').innerHTML=''"
+                    class="px-4 py-2.5 border border-border text-muted rounded text-sm hover:border-navy hover:text-navy transition-colors">
+              Reset
+            </button>
+          </div>
+        </form>
+
+        <!-- Disclaimer -->
+        <p class="text-xs text-muted mt-4 leading-relaxed border-t border-border pt-4">
+          ⚠️ This calculator is for illustrative purposes only. Consult a tax professional for advice specific to your situation.
+          <a href="/contact/" class="text-gold underline">Contact BB&amp;A</a> for personalized guidance.
+        </p>
+      </div>
+
+      <!-- Result -->
+      <div id="calc-result-{{ calc.slug }}" class="min-h-[120px] flex items-center justify-center">
+        <p class="text-muted text-sm text-center">Fill in the fields and click Calculate to see your results.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  #calculator-container input[type=number],
+  #calculator-container input[type=text],
+  #calculator-container select {
+    width: 100%;
+    border: 1px solid #e8e3d8;
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    color: #1c1c1c;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  #calculator-container input:focus,
+  #calculator-container select:focus {
+    border-color: #1c3a5e;
+    box-shadow: 0 0 0 3px rgba(28,58,94,0.1);
+  }
+  #calculator-container label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #1c3a5e;
+    margin-bottom: 0.25rem;
+  }
+</style>

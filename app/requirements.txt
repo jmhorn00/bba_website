@@ -1,0 +1,11 @@
+Django>=5.0,<6.0
+wagtail>=6.0,<7.0
+django-tailwind>=3.8
+psycopg2-binary>=2.9
+gunicorn>=22.0
+whitenoise>=6.7
+resend>=2.0
+python-decouple>=3.8
+Pillow>=10.0
+requests>=2.31
+stripe>=8.0

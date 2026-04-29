@@ -1,0 +1,150 @@
+{% comment %}
+Input fields for each calculator slug.
+Used inside the calculator detail form.
+{% endcomment %}
+
+{% with slug=calc.slug %}
+
+{% if slug == 'savings-goal' %}
+<div><label>Savings Goal ($)</label><input type="number" name="goal" value="50000" min="0" step="100"></div>
+<div><label>Current Savings ($)</label><input type="number" name="current_savings" value="5000" min="0" step="100"></div>
+<div><label>Annual Interest Rate (%)</label><input type="number" name="annual_rate" value="6" min="0" max="30" step="0.1"></div>
+<div><label>Time Period (years)</label><input type="number" name="years" value="10" min="1" max="50"></div>
+
+{% elif slug == 'savings-value' %}
+<div><label>Current Savings ($)</label><input type="number" name="current_savings" value="10000" min="0" step="100"></div>
+<div><label>Monthly Contribution ($)</label><input type="number" name="monthly_savings" value="200" min="0" step="10"></div>
+<div><label>Annual Interest Rate (%)</label><input type="number" name="annual_rate" value="6" min="0" max="30" step="0.1"></div>
+<div><label>Time Period (years)</label><input type="number" name="years" value="10" min="1" max="50"></div>
+
+{% elif slug == 'tax-estimator' %}
+<div>
+  <label>Filing Status</label>
+  <select name="filing_status">
+    <option value="single">Single</option>
+    <option value="married_filing_jointly">Married Filing Jointly</option>
+    <option value="married_filing_separately">Married Filing Separately</option>
+    <option value="head_of_household">Head of Household</option>
+  </select>
+</div>
+<div><label>W-2 / Gross Income ($)</label><input type="number" name="gross_income" value="75000" min="0" step="500"></div>
+<div><label>Other Income ($)</label><input type="number" name="other_income" value="0" min="0" step="100"></div>
+<div><label>Itemized Deductions ($ or 0 for standard)</label><input type="number" name="deductions" value="0" min="0" step="100"></div>
+<div><label>Tax Credits ($)</label><input type="number" name="credits" value="0" min="0" step="50"></div>
+<div><label>Taxes Already Withheld ($)</label><input type="number" name="withholding" value="10000" min="0" step="100"></div>
+
+{% elif slug == 'earned-income-credit' %}
+<div><label>Earned Income ($)</label><input type="number" name="income" value="30000" min="0" step="500"></div>
+<div><label>Number of Qualifying Children</label><input type="number" name="children" value="1" min="0" max="10"></div>
+<div>
+  <label>Filing Status</label>
+  <select name="filing_status">
+    <option value="single">Single / Head of Household</option>
+    <option value="married_filing_jointly">Married Filing Jointly</option>
+  </select>
+</div>
+
+{% elif slug == 'estate-tax' %}
+<div><label>Gross Estate Value ($)</label><input type="number" name="gross_estate" value="15000000" min="0" step="10000"></div>
+<div><label>Debts &amp; Expenses ($)</label><input type="number" name="debts" value="500000" min="0" step="10000"></div>
+<div><label>Charitable Deductions ($)</label><input type="number" name="charitable" value="0" min="0" step="1000"></div>
+<div><label>Marital Deduction ($)</label><input type="number" name="marital_deduction" value="0" min="0" step="10000"></div>
+
+{% elif slug == 'marginal-effective-tax' %}
+<div>
+  <label>Filing Status</label>
+  <select name="filing_status">
+    <option value="single">Single</option>
+    <option value="married_filing_jointly">Married Filing Jointly</option>
+    <option value="married_filing_separately">Married Filing Separately</option>
+    <option value="head_of_household">Head of Household</option>
+  </select>
+</div>
+<div><label>Gross Income ($)</label><input type="number" name="income" value="80000" min="0" step="500"></div>
+
+{% elif slug == 'paycheck-hourly' %}
+<div><label>Hourly Rate ($)</label><input type="number" name="hourly_rate" value="25" min="0" step="0.25"></div>
+<div><label>Hours Per Week</label><input type="number" name="hours_per_week" value="40" min="1" max="80" step="0.5"></div>
+<div>
+  <label>Filing Status</label>
+  <select name="filing_status">
+    <option value="single">Single</option>
+    <option value="married_filing_jointly">Married Filing Jointly</option>
+    <option value="head_of_household">Head of Household</option>
+  </select>
+</div>
+
+{% elif slug == 'dual-income' %}
+<div><label>Primary Income ($)</label><input type="number" name="income1" value="70000" min="0" step="500"></div>
+<div><label>Second Income ($)</label><input type="number" name="income2" value="45000" min="0" step="500"></div>
+<div><label>Work-Related Expenses ($/yr, e.g. childcare, commute)</label><input type="number" name="work_expenses" value="8000" min="0" step="100"></div>
+
+{% elif slug == '401k' %}
+<div><label>Annual Salary ($)</label><input type="number" name="salary" value="60000" min="0" step="500"></div>
+<div><label>Your Contribution (%)</label><input type="number" name="contrib_pct" value="6" min="0" max="100" step="0.5"></div>
+<div><label>Employer Match (%)</label><input type="number" name="employer_match_pct" value="3" min="0" max="100" step="0.5"></div>
+<div><label>Expected Annual Return (%)</label><input type="number" name="annual_return" value="7" min="0" max="30" step="0.1"></div>
+<div><label>Years Until Retirement</label><input type="number" name="years" value="30" min="1" max="50"></div>
+
+{% elif slug == '401k-distribution' %}
+<div><label>Current 401(k) Balance ($)</label><input type="number" name="balance" value="200000" min="0" step="1000"></div>
+<div><label>Your Age</label><input type="number" name="age" value="55" min="18" max="90"></div>
+<div><label>Estimated Tax Rate (%)</label><input type="number" name="tax_rate" value="22" min="0" max="50" step="1"></div>
+
+{% elif slug == 'rmd-beneficiary' or slug == 'rmd-owner' %}
+<div><label>Account Balance ($)</label><input type="number" name="balance" value="500000" min="0" step="1000"></div>
+<div><label>Your Age (as of Dec 31 this year)</label><input type="number" name="age" value="75" min="72" max="110"></div>
+
+{% elif slug == 'retirement-income' %}
+<div><label>Retirement Savings Balance ($)</label><input type="number" name="balance" value="750000" min="0" step="1000"></div>
+<div><label>Monthly Withdrawal ($)</label><input type="number" name="monthly_withdrawal" value="3500" min="0" step="100"></div>
+<div><label>Monthly Social Security Income ($)</label><input type="number" name="monthly_ss" value="1500" min="0" step="50"></div>
+<div><label>Expected Annual Return (%)</label><input type="number" name="annual_return" value="5" min="0" max="20" step="0.1"></div>
+
+{% elif slug == 'long-term-care' %}
+<div><label>Estimated Daily Care Rate ($)</label><input type="number" name="daily_rate" value="350" min="0" step="10"></div>
+<div><label>Expected Years of Care Needed</label><input type="number" name="years_care" value="3" min="0.5" max="20" step="0.5"></div>
+<div><label>Annual Inflation Rate (%)</label><input type="number" name="inflation_rate" value="3" min="0" max="15" step="0.1"></div>
+<div><label>Years Until Care Needed</label><input type="number" name="years_until" value="20" min="0" max="50"></div>
+
+{% elif slug == 'annual-return' %}
+<div><label>Beginning Investment Value ($)</label><input type="number" name="beginning_value" value="10000" min="0.01" step="100"></div>
+<div><label>Ending Investment Value ($)</label><input type="number" name="ending_value" value="15000" min="0" step="100"></div>
+<div><label>Dividends / Income Received ($)</label><input type="number" name="dividends" value="500" min="0" step="10"></div>
+<div><label>Number of Years Held</label><input type="number" name="years" value="5" min="0.1" max="50" step="0.1"></div>
+
+{% elif slug == 'stock-options' %}
+<div><label>Number of Option Shares</label><input type="number" name="shares" value="1000" min="1" step="100"></div>
+<div><label>Grant / Strike Price ($/share)</label><input type="number" name="grant_price" value="10.00" min="0" step="0.01"></div>
+<div><label>Current Stock Price ($/share)</label><input type="number" name="current_price" value="18.00" min="0" step="0.01"></div>
+<div><label>Target Stock Price ($/share)</label><input type="number" name="target_price" value="25.00" min="0" step="0.01"></div>
+<div><label>Estimated Tax Rate (%)</label><input type="number" name="tax_rate" value="22" min="0" max="50" step="1"></div>
+
+{% elif slug == 'future-value' %}
+<div><label>Initial Investment ($)</label><input type="number" name="principal" value="10000" min="0" step="100"></div>
+<div><label>Monthly Additions ($)</label><input type="number" name="monthly_addition" value="200" min="0" step="10"></div>
+<div><label>Annual Interest Rate (%)</label><input type="number" name="annual_rate" value="7" min="0" max="30" step="0.1"></div>
+<div><label>Time Period (years)</label><input type="number" name="years" value="10" min="1" max="50"></div>
+
+{% elif slug == 'investment-goal' %}
+<div><label>Current Portfolio Value ($)</label><input type="number" name="current_value" value="25000" min="0" step="500"></div>
+<div><label>Monthly Contribution ($)</label><input type="number" name="monthly_addition" value="500" min="0" step="50"></div>
+<div><label>Investment Goal ($)</label><input type="number" name="goal" value="500000" min="0" step="1000"></div>
+<div><label>Expected Annual Return (%)</label><input type="number" name="annual_return" value="7" min="0" max="30" step="0.1"></div>
+<div><label>Time Horizon (years)</label><input type="number" name="years" value="20" min="1" max="50"></div>
+
+{% elif slug == 'investment-property' %}
+<div><label>Purchase Price ($)</label><input type="number" name="purchase_price" value="250000" min="0" step="1000"></div>
+<div><label>Down Payment (%)</label><input type="number" name="down_payment_pct" value="20" min="0" max="100" step="1"></div>
+<div><label>Mortgage Interest Rate (%)</label><input type="number" name="interest_rate" value="7" min="0" max="20" step="0.1"></div>
+<div><label>Loan Term (years)</label><input type="number" name="loan_years" value="30" min="1" max="40"></div>
+<div><label>Monthly Rent Income ($)</label><input type="number" name="monthly_rent" value="1800" min="0" step="50"></div>
+<div><label>Monthly Operating Expenses ($)</label><input type="number" name="monthly_expenses" value="400" min="0" step="25"></div>
+<div><label>Annual Appreciation Rate (%)</label><input type="number" name="appreciation_rate" value="3" min="0" max="15" step="0.1"></div>
+<div><label>Planned Hold Period (years)</label><input type="number" name="hold_years" value="10" min="1" max="40"></div>
+
+{% else %}
+<p class="text-muted text-sm">Calculator inputs coming soon.</p>
+{% endif %}
+
+{% endwith %}
